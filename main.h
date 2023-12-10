@@ -19,8 +19,7 @@ char *_strcpy(char *dest, char *src);
 char **tokenizer(char *line);
 void free_array(char **array);
 int _excute(char **command, char **argv);
-void execmd(char **argv);
-char *get_location(char *command);
+
 
 
 
