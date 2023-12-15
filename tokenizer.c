@@ -1,40 +1,39 @@
 #include"main.h"
 char **tokenizer(char *line)
 {
-char *token = NULL, *dup_line = NULL, **argv;
+char *token = NULL, *dup_line = NULL, **argv = NULL;
 char *delim = " \t\n";
-int count = 0, i;
+int count = 0, i = 0;
 if(!line)
     return(NULL);
 dup_line = _strdup(line);
 token = strtok(dup_line, delim);
 if(token == NULL)
 {
-    free(line);
-    free(dup_line);
+    free(dup_line), dup_line = NULL;
+    free(line),line = NULL;
     return(NULL);
 }
-while(token != NULL)
+while(token)
 {
-count++;
-token = strtok(NULL, delim);
+    count++;
+    token = strtok(NULL, delim);
 }
-count++;
-free(dup_line);
-argv = malloc(sizeof(char *) * count);
-if (!argv)
+free(dup_line), dup_line = NULL;
+argv = malloc(sizeof(char *) * (count + 1));
+if(!argv)
 {
-free(line);
-return(NULL);
+    free(line), line = NULL;
+    return(NULL);
 }
 token = strtok(line, delim);
-for(i = 0 ; token != NULL; i++)
+while(token)
 {
-argv[i] = malloc(sizeof(char) * _strlen(token));
-_strcpy(argv[i], token);
-token = strtok(NULL, delim);
+    argv[i] = _strdup(token);
+    token = strtok(NULL, delim);
+    i++;
 }
+free(line), line = NULL;
 argv[i] = NULL;
-free(line);
-return(argv);
+return (argv);
 }
